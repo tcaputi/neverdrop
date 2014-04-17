@@ -18,6 +18,10 @@ var serverOptions = {
 };
 
 var server = neverDrop.createServer(serverOptions, function(socket){
+	socket.on('heartbeat', function(){
+		console.log('hb')
+	});
+	
 	for(var i=0; i<100; i++){
 		socket.write(i);
 	}
@@ -31,4 +35,8 @@ socket.on('error', function(e){
 
 socket.on('message', function(data){
 	console.log('message: ', data);
+});
+
+socket.on('heartbeat', function(){
+	console.log('hb')
 });
