@@ -13,7 +13,7 @@ var clientOptions = {
 	requestCert: true,
 	agent: false
 }
-/*
+
 var serverOptions = {
 	key: fs.readFileSync('./cert/test.key'),
 	cert: fs.readFileSync('./cert/test.crt'),
@@ -22,25 +22,40 @@ var serverOptions = {
 };
 
 var server = neverDrop.createServer(serverOptions, function(socket){
-	socket.on('heartbeat', function(){
-		console.log('server: hb')
+	socket.on('data', function(data){
+		console.log('server data: ', data.toString())
 	});
 	
-	for(var i=0; i<100; i++){
-		socket.write(i);
-	}
+	socket.on('message', function(data){
+		console.log('server message: ', data);
+	});
+	
+	socket.on('heartbeat', function(){
+		console.log('server hb');
+	});
+	
+	socket.write('hithere|poop');
+	socket.noaccumulate();
+	socket.write('here is a |lot of data');
+	socket.write('plz no |accumulate');
+	socket.accumulate();
+	socket.write('jk u can start again');
 });
 server.listen(3547);
-*/
+
 var socket = neverDrop.connect(clientOptions);
 socket.on('error', function(e){
 	console.log('error: ', e);
 });
 
 socket.on('message', function(data){
-	console.log('message: ', data);
+	console.log('client message: ', data);
 });
 
 socket.on('heartbeat', function(){
-	console.log('client: hb')
+		console.log('client hb');
+	});
+
+socket.on('data', function(data){
+	console.log('client data: ', data.toString());
 });
