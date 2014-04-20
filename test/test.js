@@ -36,10 +36,13 @@ var server = neverDrop.createServer(serverOptions, function(socket){
 	
 	socket.write('hithere|poop');
 	socket.noaccumulate();
-	socket.write('here is a |lot of data');
-	socket.write('plz no |accumulate');
-	socket.accumulate();
-	socket.write('jk u can start again');
+	var fileStream = fs.createReadStream('test.js');
+	fileStream.on('close', function(){
+		fileStream.unpipe();
+		socket.accumulate();
+		socket.write('jk u can start again');
+	});
+	fileStream.pipe(socket, {end: false});
 });
 server.listen(3547);
 
