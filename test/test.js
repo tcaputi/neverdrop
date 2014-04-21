@@ -22,6 +22,7 @@ var serverOptions = {
 };
 
 var server = neverDrop.createServer(serverOptions, function(socket){
+/*
 	socket.on('data', function(data){
 		console.log('server data: ', data.toString())
 	});
@@ -33,7 +34,7 @@ var server = neverDrop.createServer(serverOptions, function(socket){
 	socket.on('heartbeat', function(){
 		console.log('server hb');
 	});
-	
+	*/
 	socket.write('hithere|poop');
 	socket.noaccumulate();
 	var fileStream = fs.createReadStream('test.js');
@@ -47,6 +48,7 @@ var server = neverDrop.createServer(serverOptions, function(socket){
 server.listen(3547);
 
 var socket = neverDrop.connect(clientOptions);
+
 socket.on('error', function(e){
 	console.log('error: ', e);
 });
