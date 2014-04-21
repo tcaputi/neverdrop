@@ -22,7 +22,7 @@ var serverOptions = {
 };
 
 var server = neverDrop.createServer(serverOptions, function(socket){
-/*
+
 	socket.on('data', function(data){
 		console.log('server data: ', data.toString())
 	});
@@ -34,21 +34,13 @@ var server = neverDrop.createServer(serverOptions, function(socket){
 	socket.on('heartbeat', function(){
 		console.log('server hb');
 	});
-	*/
-	socket.write('hithere|poop');
-	socket.noaccumulate();
-	var fileStream = fs.createReadStream('test.js');
-	fileStream.on('close', function(){
-		fileStream.unpipe();
-		socket.accumulate();
-		socket.write('jk u can start again');
-	});
-	fileStream.pipe(socket, {end: false});
+	
+	
 });
 server.listen(3547);
 
 var socket = neverDrop.connect(clientOptions);
-
+/*
 socket.on('error', function(e){
 	console.log('error: ', e);
 });
@@ -64,3 +56,12 @@ socket.on('heartbeat', function(){
 socket.on('data', function(data){
 	console.log('client data: ', data.toString());
 });
+*/
+
+socket.message('hithere|poop');
+var fileStream = fs.createReadStream('test.js');
+fileStream.on('close', function(){
+	fileStream.unpipe();
+	socket.message('jk u can start again');
+});
+fileStream.pipe(socket, {end: false});
