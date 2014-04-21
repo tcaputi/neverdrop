@@ -57,8 +57,9 @@ socket.on('data', function(data){
 	console.log('client data: ', data.toString());
 });
 */
-
+socket.defaultMessage(true);
 socket.message('hithere|poop');
+socket.defaultMessage(false);
 var fileStream = fs.createReadStream('test.js');
 fileStream.on('close', function(){
 	fileStream.unpipe();
