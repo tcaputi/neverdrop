@@ -1,6 +1,6 @@
 {
   "name": "neverdrop",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Module for creating persistent connections that support messaging. Built on top of the native tls module.",
   "main": "neverdrop.js",
   "directories": {
